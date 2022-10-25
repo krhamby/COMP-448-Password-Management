@@ -18,10 +18,6 @@ if __name__ == '__main__':
         
         command = input("Enter command: ").split()
         
-        if command[0] != "add-user" and command[0] != "check-password" and command[0] != "remove-user" and command[0] != "print" and command[0] != "end":
-            print("Invalid command")
-            continue
-        
         # add-user <username> <password>
         if command[0] == "add-user":
             username = command[1]
@@ -40,7 +36,7 @@ if __name__ == '__main__':
                 file.write(username + ":$6$" + salt.decode('utf-8') + "$" + passHash.decode('utf-8') + "\n")
         
         # check-password <username> <password>
-        if command[0] == "check-password":
+        elif command[0] == "check-password":
             username = command[1]
             password = command[2]
             
@@ -69,7 +65,7 @@ if __name__ == '__main__':
                 print("Password is incorrect")
         
         # remove-user <username>
-        if command[0] == "remove-user":
+        elif command[0] == "remove-user":
             username = command[1]
 
             # remove line from file
@@ -84,12 +80,16 @@ if __name__ == '__main__':
                 break
         
         # print
-        if command[0] == "print":
+        elif command[0] == "print":
             with open("passwords.txt", "r") as file:
                 print(file.read())
                 
         # end
-        if command[0] == "end":
+        elif command[0] == "end":
             break
+        
+        else:
+            print("Invalid command")
+            continue
         
         
