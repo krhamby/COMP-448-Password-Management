@@ -53,16 +53,16 @@ if __name__ == '__main__':
                     break
                 
             # remove newline character
-            passHash = passHash.replace("\n", "")
+            passHash = passHash.strip()
             
             # encode passHash from string to bytes
             passHash.encode('utf-8')
             
             # compare with stored hash
             if passHash == encoder.b64encode(hash.sha512((password + salt).encode()).digest()).decode('utf-8'):
-                print("Password is correct")
+                print("Password is correct\n")
             else:
-                print("Password is incorrect")
+                print("Password is incorrect\n")
         
         # remove-user <username>
         elif command[0] == "remove-user":
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         
         # print
         elif command[0] == "print":
-            with open("passwords.txt", "r") as file:
+            with open("Project2PW.txt", "r") as file:
                 print(file.read())
                 
         # end
@@ -89,7 +89,7 @@ if __name__ == '__main__':
             break
         
         else:
-            print("Invalid command")
+            print("Invalid command\n")
             continue
         
         
