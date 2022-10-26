@@ -3,13 +3,8 @@ import base64 as encoder
 import os
 import secrets
 
-from colorama import Fore
-
-# Use the following technique to store password
-# Base64 ( SHA-512 ( password || Base64( salt )))
-
 def is_username_available(username):
-    # Check if username is available
+    # Check if username is present in the file
     with open("Project2PW.txt", "r") as file:
         for line in file:
             if line.startswith(username):
@@ -37,6 +32,7 @@ if __name__ == '__main__':
             if not username.isascii or not password.isascii:
                 print("\u001b[31mUsername and password must use ASCII characters\u001b[0m\n")
                 continue
+            # make sure the username is not already taken
             elif not is_username_available(username):
                 print("\u001b[31mUsername is not available\u001b[0m\n")
                 continue
@@ -101,18 +97,20 @@ if __name__ == '__main__':
                         file.write(line)
                 break
             
+            # Check that the user is not present in the file
             if is_username_available(username):
                 print("\u001b[32mUser removed or does not exist\u001b[0m\n")
         
-        # print
+        # print the whole file as is
         elif len(command) == 1 and command[0] == "print":
             with open("Project2PW.txt", "r") as file:
                 print(file.read())
                 
-        # end
+        # end the while loop
         elif len(command) == 1 and command[0] == "end":
             break
         
+        # catch misc. invalid commands
         else:
             print("\u001b[31mInvalid command\u001b[0m\n")
             continue
