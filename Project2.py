@@ -19,7 +19,7 @@ if __name__ == '__main__':
         command = input("Enter command: ").split()
         
         # add-user <username> <password>
-        if command[0] == "add-user":
+        if len(command) == 3 and command[0] == "add-user":
             username = command[1]
             password = command[2]
             
@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 file.write(username + ":$6$" + salt.decode('utf-8') + "$" + passHash.decode('utf-8') + "\n")
         
         # check-password <username> <password>
-        elif command[0] == "check-password":
+        elif len(command) == 3 and command[0] == "check-password":
             username = command[1]
             password = command[2]
             
@@ -65,7 +65,7 @@ if __name__ == '__main__':
                 print("Password is incorrect\n")
         
         # remove-user <username>
-        elif command[0] == "remove-user":
+        elif len(command) ==2 and command[0] == "remove-user":
             username = command[1]
 
             # remove line from file
@@ -80,12 +80,12 @@ if __name__ == '__main__':
                 break
         
         # print
-        elif command[0] == "print":
+        elif len(command) == 1 and command[0] == "print":
             with open("Project2PW.txt", "r") as file:
                 print(file.read())
                 
         # end
-        elif command[0] == "end":
+        elif len(command) == 1 and command[0] == "end":
             break
         
         else:
