@@ -8,6 +8,14 @@ from colorama import Fore
 # Use the following technique to store password
 # Base64 ( SHA-512 ( password || Base64( salt )))
 
+def is_username_available(username):
+    # Check if username is available
+    with open("Project2PW.txt", "r") as file:
+        for line in file:
+            if line.startswith(username):
+                return False
+    return True
+
 # Command line
 if __name__ == '__main__':
     while True:
@@ -29,7 +37,10 @@ if __name__ == '__main__':
             if not username.isascii or not password.isascii:
                 print("\u001b[31mUsername and password must use ASCII characters\u001b[0m\n")
                 continue
-            else:            
+            elif not is_username_available(username):
+                print("\u001b[31mUsername is not available\u001b[0m\n")
+                continue
+            else:     
                 # generate salt and encode with Base64
                 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 salt = ''.join(secrets.choice(ALPHABET) for i in range(16))
@@ -41,6 +52,10 @@ if __name__ == '__main__':
                 # store in file
                 with open("Project2PW.txt", 'a') as file:
                     file.write(username + ":$6$" + salt.decode('ascii') + "$" + passHash.decode('ascii') + "\n")
+                    
+                # confirm
+                if not is_username_available(username):
+                    print("\u001b[32mUser added\u001b[0m\n")
             
         # check-password <username> <password>
         elif len(command) == 3 and command[0] == "check-password":
@@ -85,6 +100,9 @@ if __name__ == '__main__':
                             continue
                         file.write(line)
                 break
+            
+            if is_username_available(username):
+                print("\u001b[32mUser removed or does not exist\u001b[0m\n")
         
         # print
         elif len(command) == 1 and command[0] == "print":
