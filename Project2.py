@@ -1,3 +1,8 @@
+# Authors: Kevin Hamby, Melva Loock, Philippe Keita
+# Course: COMP 448
+# Assignment: Project 2
+# Date: 10/25/2023
+
 import hashlib as hash
 import base64 as encoder
 import os
